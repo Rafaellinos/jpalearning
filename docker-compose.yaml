@@ -7,7 +7,7 @@ services:
     environment:
       POSTGRES_USER: app
       POSTGRES_PASSWORD: example
-      POSTGRES_DB: school
+      POSTGRES_DB: persondb
     ports:
       - "5432:5432"
     volumes:

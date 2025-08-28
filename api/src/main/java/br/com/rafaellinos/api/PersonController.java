@@ -6,28 +6,25 @@ import br.com.rafaellinos.repository.entity.PersonEntity;
 import br.com.rafaellinos.repository.entity.PersonQualificationEntity;
 import br.com.rafaellinos.repository.jparepository.PersonQualificationRepository;
 import br.com.rafaellinos.repository.jparepository.PersonRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/person")
 @RequiredArgsConstructor
-public class personController {
+public class PersonController {
 
     private final PersonRepository personRepository;
 
     private final PersonQualificationRepository personQualificationRepository;
-
-    @PostConstruct
-    void initDb() {
-        PersonQualificationEntity personQualificationEntity = new PersonQualificationEntity();
-        personQualificationEntity.setName("Teacher");
-        personQualificationRepository.save(personQualificationEntity);
-    }
 
 
     @PostMapping
@@ -47,7 +44,7 @@ public class personController {
     @GetMapping
     public ResponseEntity<PersonResponseDto> getPerson(
             @RequestParam UUID personId
-            ) {
+    ) {
         PersonEntity personEntity = personRepository.findById(personId).orElseThrow(RuntimeException::new);
         return ResponseEntity.ok(new PersonResponseDto(personEntity.getId(), personEntity.getName(), personEntity.getAge()));
     }

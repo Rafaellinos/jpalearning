@@ -1,16 +1,12 @@
--- Enable UUID generation extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Domain table for person qualification
 CREATE TABLE person_qualification (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(50) NOT NULL UNIQUE
 );
 
--- Insert the possible roles
 INSERT INTO person_qualification (name) VALUES ('student'), ('teacher');
 
--- Person table
 CREATE TABLE person (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(100) NOT NULL,
@@ -18,61 +14,53 @@ CREATE TABLE person (
     qualification_id BIGINT NOT NULL REFERENCES person_qualification(id)
 );
 
--- Courses table
-CREATE TABLE courses (
+CREATE TABLE email (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-    name VARCHAR(100) NOT NULL,
-    description TEXT
+    email VARCHAR(100) NOT NULL,
+    main_email BOOLEAN,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    person_id UUID NOT NULL
 );
 
--- A course can have exactly one teacher (qualification must be 'teacher')
-ALTER TABLE courses
-ADD COLUMN teacher_id UUID,
-ADD CONSTRAINT fk_teacher FOREIGN KEY (teacher_id) REFERENCES person(id);
+ALTER TABLE email
+    ADD CONSTRAINT fk_email_person
+    FOREIGN KEY (person_id) REFERENCES person(id)
+    ON DELETE CASCADE;
 
--- Many-to-many: courses <-> students
-CREATE TABLE course_students (
-    course_id UUID NOT NULL REFERENCES courses(id) ON DELETE CASCADE,
-    student_id UUID NOT NULL REFERENCES person(id) ON DELETE CASCADE,
-    PRIMARY KEY (course_id, student_id)
+CREATE INDEX idx_email_person_id ON email(person_id);
+
+
+CREATE TABLE endereco (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    logradouro_name VARCHAR(100) NOT NULL,
+    main_logradouro BOOLEAN,
+    logradouro_number VARCHAR(50),
+    cep VARCHAR(20),
+    cidade VARCHAR(100),
+    uf VARCHAR(10),
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    person_id UUID NOT NULL
 );
 
--- Ensure teacher_id really belongs to a teacher
-CREATE OR REPLACE FUNCTION check_teacher_is_valid()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1
-        FROM person p
-        JOIN person_qualification q ON p.qualification_id = q.id
-        WHERE p.id = NEW.teacher_id AND q.name = 'teacher'
-    ) THEN
-        RAISE EXCEPTION 'Assigned teacher must have qualification = teacher';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+ALTER TABLE endereco
+    ADD CONSTRAINT fk_endereco_person
+    FOREIGN KEY (person_id) REFERENCES person(id)
+    ON DELETE CASCADE;
 
-CREATE TRIGGER trg_check_teacher
-BEFORE INSERT OR UPDATE ON courses
-FOR EACH ROW EXECUTE FUNCTION check_teacher_is_valid();
+CREATE INDEX idx_endereco_person_id ON endereco(person_id);
 
--- Ensure students in relation are really "student"
-CREATE OR REPLACE FUNCTION check_student_is_valid()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF NOT EXISTS (
-        SELECT 1
-        FROM person p
-        JOIN person_qualification q ON p.qualification_id = q.id
-        WHERE p.id = NEW.student_id AND q.name = 'student'
-    ) THEN
-        RAISE EXCEPTION 'Assigned student must have qualification = student';
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
+CREATE TABLE telefone (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    telefone VARCHAR(20),
+    ddd VARCHAR(5),
+    main_telefone BOOLEAN,
+    create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    person_id UUID NOT NULL
+);
 
-CREATE TRIGGER trg_check_student
-BEFORE INSERT OR UPDATE ON course_students
-FOR EACH ROW EXECUTE FUNCTION check_student_is_valid();
+ALTER TABLE telefone
+    ADD CONSTRAINT fk_telefone_person
+    FOREIGN KEY (person_id) REFERENCES person(id)
+    ON DELETE CASCADE;
+
+CREATE INDEX idx_telefone_person_id ON telefone(person_id);

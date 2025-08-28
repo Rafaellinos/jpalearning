@@ -1,11 +1,19 @@
 package br.com.rafaellinos.repository.entity;
 
-
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -14,7 +22,7 @@ import java.util.UUID;
 public class PersonEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, length = 100)
@@ -27,11 +35,16 @@ public class PersonEntity {
     @JoinColumn(name = "qualification_id", nullable = false)
     private PersonQualificationEntity qualification;
 
-    // Reverse relationships
-    @OneToMany(mappedBy = "teacher")
-    private Set<CourseEntity> coursesTaught = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "person_id")
+    private List<EmailEntity> emails;
 
-    @ManyToMany(mappedBy = "students")
-    private Set<CourseEntity> coursesEnrolled = new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "person_id")
+    private List<TelefoneEntity> telefones;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "person_id")
+    private List<EnderecoEntity> enderecos;
 
 }
