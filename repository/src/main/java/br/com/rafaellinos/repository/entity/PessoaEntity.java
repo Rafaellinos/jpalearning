@@ -19,7 +19,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "person")
 @Data
-public class PersonEntity {
+public class PessoaEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -31,9 +31,12 @@ public class PersonEntity {
     @Column(nullable = false)
     private int age;
 
+    @Column(nullable = false, length = 14)
+    private String documento;
+
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "qualification_id", nullable = false)
-    private PersonQualificationEntity qualification;
+    private PessoaQualificationEntity qualification;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "person_id")

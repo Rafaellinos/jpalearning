@@ -11,6 +11,7 @@ CREATE TABLE person (
     id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     name VARCHAR(100) NOT NULL,
     age INT NOT NULL,
+    documento VARCHAR(14) NOT NULL,
     qualification_id BIGINT NOT NULL REFERENCES person_qualification(id)
 );
 

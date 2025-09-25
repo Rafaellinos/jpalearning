@@ -1,11 +1,9 @@
 package br.com.rafaellinos.repository.jparepository;
 
-import br.com.rafaellinos.repository.entity.TelefoneEntity;
+import br.com.rafaellinos.repository.entity.PessoaQualificationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
-
 @Repository
-public interface TelefoneRepository extends JpaRepository<TelefoneEntity, UUID> {
+public interface PessoaQualificationJpaRepository extends JpaRepository<PessoaQualificationEntity, Long> {
 }
