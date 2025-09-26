@@ -2,11 +2,15 @@ package br.com.rafaellinos.repository.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
@@ -14,7 +18,8 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "endereco")
-@Data
+@Getter
+@Setter
 public class EnderecoEntity {
 
     @Id
@@ -42,4 +47,8 @@ public class EnderecoEntity {
     @CreatedDate
     @Column(name = "create_date")
     private Instant createdDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
+    private PessoaEntity pessoaEntity;
 }
