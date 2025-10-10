@@ -40,7 +40,5 @@ public class TelefoneEntity {
     private Boolean mainTelefone;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "person_id")
     private PessoaEntity pessoaEntity;
-
 }

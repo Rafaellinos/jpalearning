@@ -20,7 +20,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>br.com.rafaellinos.core</groupId>
+            <groupId>br.com.rafaellinos</groupId>
             <artifactId>core</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>

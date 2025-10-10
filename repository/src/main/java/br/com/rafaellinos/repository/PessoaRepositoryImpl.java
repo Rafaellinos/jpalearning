@@ -35,6 +35,7 @@ public class PessoaRepositoryImpl implements PessoaRepository {
     }
 
     @Override
+    @Transactional
     public PageableDomain<Pessoa> get(PessoaSpecification spec) {
         Specification<PessoaEntity> jpaSpec = ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), spec.getId()));
         Pageable pageable = PageRequest.of(spec.getPageNumber(), spec.getPageSize());

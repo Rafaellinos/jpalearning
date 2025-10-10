@@ -13,7 +13,6 @@ import br.com.rafaellinos.repository.entity.TelefoneEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface PessoaEntityMapper {
@@ -39,6 +38,7 @@ public interface PessoaEntityMapper {
         entity.setAge(domain.getIdade());
         entity.setDocumento(domain.getDocumento().toString());
 //        entity.setQualification(toEntity(domain.getQualification()));
+        entity.addEmail();
         entity.setEmails(toEntityEmails(domain.getEmails()));
         entity.setTelefones(toEntityTelefones(domain.getTelefones()));
         entity.setEnderecos(toEntityEnderecos(domain.getEnderecos()));
@@ -62,11 +62,11 @@ public interface PessoaEntityMapper {
     }
 
     default List<Email> toDomainEmails(List<EmailEntity> entities) {
-        return entities == null ? null : entities.stream().map(this::toDomain).collect(Collectors.toList());
+        return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
     default List<EmailEntity> toEntityEmails(List<Email> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).collect(Collectors.toList());
+        return domains == null ? null : domains.stream().map(this::toEntity).toList();
     }
 
     default Endereco toDomain(EnderecoEntity entity) {
@@ -94,11 +94,11 @@ public interface PessoaEntityMapper {
     }
 
     default List<Endereco> toDomainEnderecos(List<EnderecoEntity> entities) {
-        return entities == null ? null : entities.stream().map(this::toDomain).collect(Collectors.toList());
+        return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
     default List<EnderecoEntity> toEntityEnderecos(List<Endereco> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).collect(Collectors.toList());
+        return domains == null ? null : domains.stream().map(this::toEntity).toList();
     }
 
     default Telefone toDomain(TelefoneEntity entity) {
@@ -120,11 +120,11 @@ public interface PessoaEntityMapper {
     }
 
     default List<Telefone> toDomainTelefones(List<TelefoneEntity> entities) {
-        return entities == null ? null : entities.stream().map(this::toDomain).collect(Collectors.toList());
+        return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
     default List<TelefoneEntity> toEntityTelefones(List<Telefone> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).collect(Collectors.toList());
+        return domains == null ? null : domains.stream().map(this::toEntity).toList();
     }
 
 }

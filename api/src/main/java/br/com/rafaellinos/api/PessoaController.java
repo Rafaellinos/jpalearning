@@ -9,6 +9,7 @@ import br.com.rafaellinos.core.domain.Pessoa;
 import br.com.rafaellinos.core.specification.PessoaSpecification;
 import br.com.rafaellinos.core.usecase.PessoaUseCase;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,10 +39,16 @@ public class PessoaController {
 
     @GetMapping
     public ResponseEntity<PageableDto<PessoaResponseDto>> getPessoa(
-            @RequestParam UUID personId
+            @RequestParam UUID personId,
+            Pageable pageable
     ) {
         PageableDomain<Pessoa> pessoa = pessoaUseCase
-                .getPessoa(PessoaSpecification.builder().withId(personId).build());
+                .getPessoa(
+                        PessoaSpecification.builder()
+                                .withPageNumber(pageable.getPageNumber())
+                                .withPageSize(pageable.getPageSize())
+                                .withId(personId).build()
+                );
         return ResponseEntity.ok(personMapper.pessoaResponseDtoPageableDto(pessoa));
     }
 

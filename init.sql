@@ -20,7 +20,7 @@ CREATE TABLE email (
     email VARCHAR(100) NOT NULL,
     main_email BOOLEAN,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    person_id UUID NOT NULL
+    person_id UUID
 );
 
 ALTER TABLE email
@@ -40,7 +40,7 @@ CREATE TABLE endereco (
     cidade VARCHAR(100),
     uf VARCHAR(10),
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    person_id UUID NOT NULL
+    person_id UUID
 );
 
 ALTER TABLE endereco
@@ -56,7 +56,7 @@ CREATE TABLE telefone (
     ddd VARCHAR(5),
     main_telefone BOOLEAN,
     create_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    person_id UUID NOT NULL
+    person_id UUID
 );
 
 ALTER TABLE telefone

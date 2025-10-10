@@ -51,4 +51,19 @@ public class PessoaEntity {
     @OneToMany(mappedBy = "pessoaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EnderecoEntity> enderecos = new ArrayList<>();
 
+    public void addEmail(EmailEntity email) {
+        email.setPessoaEntity(this);
+        this.getEmails().add(email);
+    }
+
+    public void addTelefone(TelefoneEntity telefoneEntity) {
+        telefoneEntity.setPessoaEntity(this);
+        this.getTelefones().add(telefoneEntity);
+    }
+
+    public void addEndereco(EnderecoEntity enderecoEntity) {
+        enderecoEntity.setPessoaEntity(this);
+        this.getEnderecos().add(enderecoEntity);
+    }
+
 }
