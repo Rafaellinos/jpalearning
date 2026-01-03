@@ -1,17 +1,6 @@
 package br.com.rafaellinos.repository.entity;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import lombok.Data;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -51,19 +40,5 @@ public class PessoaEntity {
     @OneToMany(mappedBy = "pessoaEntity", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<EnderecoEntity> enderecos = new ArrayList<>();
 
-    public void addEmail(EmailEntity email) {
-        email.setPessoaEntity(this);
-        this.getEmails().add(email);
-    }
-
-    public void addTelefone(TelefoneEntity telefoneEntity) {
-        telefoneEntity.setPessoaEntity(this);
-        this.getTelefones().add(telefoneEntity);
-    }
-
-    public void addEndereco(EnderecoEntity enderecoEntity) {
-        enderecoEntity.setPessoaEntity(this);
-        this.getEnderecos().add(enderecoEntity);
-    }
 
 }

@@ -49,5 +49,6 @@ public class EnderecoEntity {
     private Instant createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "person_id")
     private PessoaEntity pessoaEntity;
 }

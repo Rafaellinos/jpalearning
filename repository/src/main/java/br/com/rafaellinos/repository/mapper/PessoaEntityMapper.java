@@ -37,11 +37,9 @@ public interface PessoaEntityMapper {
         entity.setName(domain.getNome());
         entity.setAge(domain.getIdade());
         entity.setDocumento(domain.getDocumento().toString());
-//        entity.setQualification(toEntity(domain.getQualification()));
-        entity.addEmail();
-        entity.setEmails(toEntityEmails(domain.getEmails()));
-        entity.setTelefones(toEntityTelefones(domain.getTelefones()));
-        entity.setEnderecos(toEntityEnderecos(domain.getEnderecos()));
+        entity.getEmails().addAll(toEntityEmails(domain.getEmails()));
+        entity.getTelefones().addAll(toEntityTelefones(domain.getTelefones()));
+        entity.getEnderecos().addAll(toEntityEnderecos(domain.getEnderecos()));
         return entity;
     }
 
