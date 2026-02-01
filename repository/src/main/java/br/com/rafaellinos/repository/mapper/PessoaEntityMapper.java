@@ -1,11 +1,6 @@
 package br.com.rafaellinos.repository.mapper;
 
-import br.com.rafaellinos.core.domain.Cep;
-import br.com.rafaellinos.core.domain.Documento;
-import br.com.rafaellinos.core.domain.Email;
-import br.com.rafaellinos.core.domain.Endereco;
-import br.com.rafaellinos.core.domain.Pessoa;
-import br.com.rafaellinos.core.domain.Telefone;
+import br.com.rafaellinos.core.domain.*;
 import br.com.rafaellinos.repository.entity.EmailEntity;
 import br.com.rafaellinos.repository.entity.EnderecoEntity;
 import br.com.rafaellinos.repository.entity.PessoaEntity;
@@ -37,9 +32,9 @@ public interface PessoaEntityMapper {
         entity.setName(domain.getNome());
         entity.setAge(domain.getIdade());
         entity.setDocumento(domain.getDocumento().toString());
-        entity.getEmails().addAll(toEntityEmails(domain.getEmails()));
-        entity.getTelefones().addAll(toEntityTelefones(domain.getTelefones()));
-        entity.getEnderecos().addAll(toEntityEnderecos(domain.getEnderecos()));
+        entity.getEmails().addAll(toEntityEmails(domain.getEmails(), entity));
+        entity.getTelefones().addAll(toEntityTelefones(domain.getTelefones(), entity));
+        entity.getEnderecos().addAll(toEntityEnderecos(domain.getEnderecos(), entity));
         return entity;
     }
 
@@ -51,11 +46,12 @@ public interface PessoaEntityMapper {
         );
     }
 
-    default EmailEntity toEntity(Email domain) {
+    default EmailEntity toEntity(Email domain, PessoaEntity pessoaEntity) {
         if (domain == null) return null;
         EmailEntity entity = new EmailEntity();
         entity.setEmail(domain.getEmail());
         entity.setMainEmail(domain.getPrincipal());
+        entity.setPessoaEntity(pessoaEntity);
         return entity;
     }
 
@@ -63,8 +59,8 @@ public interface PessoaEntityMapper {
         return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
-    default List<EmailEntity> toEntityEmails(List<Email> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).toList();
+    default List<EmailEntity> toEntityEmails(List<Email> domains, PessoaEntity pessoaEntity) {
+        return domains == null ? null : domains.stream().map(e -> this.toEntity(e, pessoaEntity)).toList();
     }
 
     default Endereco toDomain(EnderecoEntity entity) {
@@ -79,7 +75,7 @@ public interface PessoaEntityMapper {
         );
     }
 
-    default EnderecoEntity toEntity(Endereco domain) {
+    default EnderecoEntity toEntity(Endereco domain, PessoaEntity pessoaEntity) {
         if (domain == null) return null;
         EnderecoEntity entity = new EnderecoEntity();
         entity.setLogradouroName(domain.getLogradouro());
@@ -88,6 +84,7 @@ public interface PessoaEntityMapper {
         entity.setCep(domain.getCep().toString());
         entity.setCidade(domain.getCidade());
         entity.setUf(domain.getUf());
+        entity.setPessoaEntity(pessoaEntity);
         return entity;
     }
 
@@ -95,8 +92,8 @@ public interface PessoaEntityMapper {
         return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
-    default List<EnderecoEntity> toEntityEnderecos(List<Endereco> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).toList();
+    default List<EnderecoEntity> toEntityEnderecos(List<Endereco> domains, PessoaEntity pessoaEntity) {
+        return domains == null ? null : domains.stream().map(e -> this.toEntity(e, pessoaEntity)).toList();
     }
 
     default Telefone toDomain(TelefoneEntity entity) {
@@ -108,12 +105,13 @@ public interface PessoaEntityMapper {
         );
     }
 
-    default TelefoneEntity toEntity(Telefone domain) {
+    default TelefoneEntity toEntity(Telefone domain, PessoaEntity pessoaEntity) {
         if (domain == null) return null;
         TelefoneEntity entity = new TelefoneEntity();
         entity.setTelefone(domain.getTelefone());
         entity.setDdd(domain.getDdd());
         entity.setMainTelefone(domain.getPrincipal());
+        entity.setPessoaEntity(pessoaEntity);
         return entity;
     }
 
@@ -121,8 +119,8 @@ public interface PessoaEntityMapper {
         return entities == null ? null : entities.stream().map(this::toDomain).toList();
     }
 
-    default List<TelefoneEntity> toEntityTelefones(List<Telefone> domains) {
-        return domains == null ? null : domains.stream().map(this::toEntity).toList();
+    default List<TelefoneEntity> toEntityTelefones(List<Telefone> domains, PessoaEntity pessoaEntity) {
+        return domains == null ? null : domains.stream().map(t -> this.toEntity(t, pessoaEntity)).toList();
     }
 
 }
