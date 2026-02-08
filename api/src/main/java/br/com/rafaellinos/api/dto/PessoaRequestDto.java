@@ -4,6 +4,7 @@ import java.util.List;
 
 public record PessoaRequestDto(
         String nome,
+        String sobrenome,
         Integer idade,
         List<EmailDto> emails,
         String documento,

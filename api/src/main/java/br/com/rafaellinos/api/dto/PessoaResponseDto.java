@@ -6,6 +6,7 @@ import java.util.UUID;
 public record PessoaResponseDto(
         UUID id,
         String name,
+        String surname,
         Integer age,
         List<EmailDto> emails,
         List<TelefoneDto> telefones,

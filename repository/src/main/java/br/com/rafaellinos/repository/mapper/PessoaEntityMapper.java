@@ -18,6 +18,7 @@ public interface PessoaEntityMapper {
         domain.setPessoaId(entity.getId());
         domain.setNome(entity.getName());
         domain.setIdade(entity.getAge());
+        domain.setSobrenome(entity.getSobrenome());
         domain.setDocumento(Documento.fromString(entity.getDocumento()));
         domain.setEmails(toDomainEmails(entity.getEmails()));
         domain.setTelefones(toDomainTelefones(entity.getTelefones()));
@@ -31,6 +32,7 @@ public interface PessoaEntityMapper {
         entity.setId(domain.getPessoaId());
         entity.setName(domain.getNome());
         entity.setAge(domain.getIdade());
+        entity.setSobrenome(domain.getSobrenome());
         entity.setDocumento(domain.getDocumento().toString());
         entity.getEmails().addAll(toEntityEmails(domain.getEmails(), entity));
         entity.getTelefones().addAll(toEntityTelefones(domain.getTelefones(), entity));

@@ -1,9 +1,10 @@
 package br.com.rafaellinos.repository.jparepository;
 
-import br.com.rafaellinos.repository.entity.PessoaQualificationEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import br.com.rafaellinos.repository.entity.*;
+import org.springframework.data.jpa.repository.*;
+import org.springframework.stereotype.*;
 
 @Repository
 public interface PessoaQualificationJpaRepository extends JpaRepository<PessoaQualificationEntity, Long> {
+
 }
