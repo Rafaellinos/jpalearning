@@ -10,6 +10,7 @@ public class Pessoa {
 
     private UUID pessoaId;
     private String nome;
+    private String sobrenome;
     private Integer idade;
     private List<Email> emails;
     private List<Telefone> telefones;
