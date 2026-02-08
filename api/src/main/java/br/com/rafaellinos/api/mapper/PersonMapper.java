@@ -25,6 +25,7 @@ public abstract class PersonMapper {
         Pessoa pessoa = new Pessoa();
         pessoa.setDocumento(Documento.fromString(pessoaRequestDto.documento()));
         pessoa.setNome(pessoaRequestDto.nome());
+        pessoa.setSobrenome(pessoaRequestDto.sobrenome());
         pessoa.setIdade(pessoaRequestDto.idade());
         pessoa.setEmails(emailMapper.toDomainList(pessoaRequestDto.emails()));
         pessoa.setTelefones(telefoneMapper.toDomainList(pessoaRequestDto.telefones()));
@@ -36,6 +37,7 @@ public abstract class PersonMapper {
         return new PessoaResponseDto(
                 pessoa.getPessoaId(),
                 pessoa.getNome(),
+                pessoa.getSobrenome(),
                 pessoa.getIdade(),
                 emailMapper.toDtoList(pessoa.getEmails()),
                 telefoneMapper.toDtoList(pessoa.getTelefones()),
