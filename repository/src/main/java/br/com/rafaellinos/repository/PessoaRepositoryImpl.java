@@ -8,6 +8,7 @@ import br.com.rafaellinos.core.specification.PessoaSpecification;
 import br.com.rafaellinos.repository.entity.PessoaEntity;
 import br.com.rafaellinos.repository.entity.PessoaQualificationEntity;
 import br.com.rafaellinos.repository.jparepository.PessoaJpaRepository;
+import br.com.rafaellinos.repository.jpaspecification.PessoaJpaSpecification;
 import br.com.rafaellinos.repository.mapper.PessoaEntityMapper;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +38,7 @@ public class PessoaRepositoryImpl implements PessoaRepository {
     @Override
     @Transactional
     public PageableDomain<Pessoa> get(PessoaSpecification spec) {
-        Specification<PessoaEntity> jpaSpec = ((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), spec.getId()));
+        Specification<PessoaEntity> jpaSpec = PessoaJpaSpecification.from(spec);
         Pageable pageable = PageRequest.of(spec.getPageNumber(), spec.getPageSize());
         Page<PessoaEntity> pessoaEntities = pessoaJpaRepository
                 .findAll(jpaSpec, pageable);

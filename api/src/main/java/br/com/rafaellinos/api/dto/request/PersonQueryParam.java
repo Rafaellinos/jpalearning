@@ -1,12 +1,12 @@
 package br.com.rafaellinos.api.dto.request;
 
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import java.util.List;
 import java.util.UUID;
 
 public record PersonQueryParam(
         UUID personId,
+        String nome,
+        String sobrenome,
         List<Expand> expands
 ) {
 
