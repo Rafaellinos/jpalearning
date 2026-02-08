@@ -21,6 +21,9 @@ public class PessoaEntity {
     @Column(nullable = false, length = 100)
     private String name;
 
+    @Column(nullable = false, length = 100)
+    private String sobrenome;
+
     @Column(nullable = false)
     private int age;
 
