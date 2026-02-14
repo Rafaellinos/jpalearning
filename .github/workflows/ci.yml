@@ -55,8 +55,7 @@ jobs:
           mvn clean verify sonar:sonar \
             -Dsonar.projectKey=jpalearning \
             -Dsonar.organization=rafaellinos \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -B
+            -Dsonar.host.url=https://sonarcloud.io
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
