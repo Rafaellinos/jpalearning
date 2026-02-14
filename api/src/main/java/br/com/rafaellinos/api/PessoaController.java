@@ -1,25 +1,18 @@
 package br.com.rafaellinos.api;
 
-import br.com.rafaellinos.api.dto.PageableDto;
-import br.com.rafaellinos.api.dto.PessoaRequestDto;
-import br.com.rafaellinos.api.dto.PessoaResponseDto;
-import br.com.rafaellinos.api.dto.request.Expand;
-import br.com.rafaellinos.api.dto.request.PersonQueryParam;
-import br.com.rafaellinos.api.mapper.PersonMapper;
-import br.com.rafaellinos.core.domain.PageableDomain;
-import br.com.rafaellinos.core.domain.Pessoa;
-import br.com.rafaellinos.core.specification.PessoaSpecification;
-import br.com.rafaellinos.core.usecase.PessoaUseCase;
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import br.com.rafaellinos.api.dto.*;
+import br.com.rafaellinos.api.dto.request.*;
+import br.com.rafaellinos.api.mapper.*;
+import br.com.rafaellinos.core.domain.*;
+import br.com.rafaellinos.core.specification.*;
+import br.com.rafaellinos.core.usecase.*;
+import lombok.*;
+import org.springframework.data.domain.*;
+import org.springframework.http.*;
+import org.springframework.validation.annotation.*;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "/person")
@@ -35,6 +28,21 @@ public class PessoaController {
     ) {
         Pessoa pessoa = pessoaUseCase.save(personMapper.toDomain(personDto));
         return ResponseEntity.status(HttpStatus.CREATED).body(personMapper.toDto(pessoa));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<PessoaResponseDto> updatePessoa(
+            @PathVariable UUID id,
+            @RequestBody PessoaRequestDto request
+    ) {
+        Pessoa pessoaAtualizada = pessoaUseCase.update(
+                id,
+                personMapper.toDomain(request)
+        );
+
+        return ResponseEntity.ok(
+                personMapper.toDto(pessoaAtualizada)
+        );
     }
 
     @GetMapping
