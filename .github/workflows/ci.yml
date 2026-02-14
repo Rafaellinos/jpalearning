@@ -52,10 +52,21 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mvn clean verify sonar:sonar \
+          mvn clean verify
+          echo "Checking for JaCoCo report..."
+          ls -la jacoco-report-aggregator/target/site/jacoco-aggregate/ || echo "JaCoCo aggregate report directory not found"
+          if [ -f "jacoco-report-aggregator/target/site/jacoco-aggregate/jacoco.xml" ]; then
+            echo "JaCoCo XML report found!"
+            cat jacoco-report-aggregator/target/site/jacoco-aggregate/jacoco.xml | head -20
+          else
+            echo "JaCoCo XML report NOT found!"
+            exit 1
+          fi
+          mvn sonar:sonar \
             -Dsonar.projectKey=jpalearning \
             -Dsonar.organization=rafaellinos \
-            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.host.url=https://sonarcloud.io \
+            -Dsonar.coverage.jacoco.xmlReportPaths=$GITHUB_WORKSPACE/jacoco-report-aggregator/target/site/jacoco-aggregate/jacoco.xml
 
       - name: Upload coverage reports
         uses: actions/upload-artifact@v4
