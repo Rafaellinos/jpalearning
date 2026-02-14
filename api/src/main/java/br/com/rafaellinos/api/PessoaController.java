@@ -45,8 +45,9 @@ public class PessoaController {
         PageableDomain<Pessoa> pessoa = pessoaUseCase
                 .getPessoa(
                         PessoaSpecification.builder()
-                                .withNome(personQueryParam.sobrenome())
+                                .withSobrenome(personQueryParam.sobrenome())
                                 .withNome(personQueryParam.nome())
+                                .withDocumento(personQueryParam.documento())
                                 .withPageNumber(pageable.getPageNumber())
                                 .withPageSize(pageable.getPageSize())
                                 .withSearchEmail(personQueryParam.expands().contains(Expand.EMAIL))
