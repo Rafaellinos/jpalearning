@@ -40,6 +40,8 @@
         <java.version>21</java.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
         <hibernate.version>6.6.26.Final</hibernate.version>
+
+        <!--jacoco + sonarqube -->
         <jacoco.version>0.8.12</jacoco.version>
         <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/jacoco-report-aggregator/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
