@@ -42,6 +42,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>report-aggregate</id>
@@ -49,15 +50,22 @@
                         <goals>
                             <goal>report-aggregate</goal>
                         </goals>
-                        <configuration>
-                            <title>JPA Learning - Cobertura Agregada</title>
-                            <footer>JPA Learning Project</footer>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-aggregate</outputDirectory>
-                        </configuration>
                     </execution>
                 </executions>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <systemPropertyVariables>
+                        <jacoco-agent.destfile>**/jacoco.exec</jacoco-agent.destfile>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+
         </plugins>
+
     </build>
 
 </project>
