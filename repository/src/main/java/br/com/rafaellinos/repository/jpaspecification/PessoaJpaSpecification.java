@@ -14,6 +14,9 @@ public class PessoaJpaSpecification {
     public static Specification<PessoaEntity> from(PessoaSpecification spec) {
         return ((root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
+            if (spec.getDocumento() != null) {
+                predicates.add(criteriaBuilder.equal(root.get(PessoaEntity_.documento), spec.getDocumento()));
+            }
             if (spec.getId() != null) {
                 predicates.add(criteriaBuilder.equal(root.get(PessoaEntity_.id), spec.getId()));
             }

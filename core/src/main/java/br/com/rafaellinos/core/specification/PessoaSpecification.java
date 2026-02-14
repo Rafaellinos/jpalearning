@@ -14,6 +14,7 @@ public class PessoaSpecification {
     private Integer pageNumber;
     private String nome;
     private String sobrenome;
+    private String documento;
     private boolean searchEmail;
     private boolean searchTelefone;
     private boolean searchEndereco;

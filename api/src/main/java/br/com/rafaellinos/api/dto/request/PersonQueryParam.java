@@ -7,6 +7,7 @@ public record PersonQueryParam(
         UUID personId,
         String nome,
         String sobrenome,
+        String documento,
         List<Expand> expands
 ) {
 
